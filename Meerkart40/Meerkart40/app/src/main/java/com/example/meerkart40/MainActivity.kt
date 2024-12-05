@@ -97,7 +97,6 @@ class MainActivity : AppCompatActivity() {
         val email: String,
         val nomCli: String,
         val apellido: String,
-        val password: String,
         val pag1:String,
         val pag2: String
     )

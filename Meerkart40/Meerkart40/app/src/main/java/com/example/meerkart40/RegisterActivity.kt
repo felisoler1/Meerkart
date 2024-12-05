@@ -78,6 +78,7 @@ class RegisterActivity : AppCompatActivity() {
         val botoSendRegister: Button =findViewById<Button>(R.id.register_send_button)
         botoSendRegister.setOnClickListener {
 
+
             var nombre = nombre_registre.text.toString()
             var apellido = apellido_registre.text.toString()
             var correo = email_registre.text.toString()
@@ -85,6 +86,7 @@ class RegisterActivity : AppCompatActivity() {
             var contrarepe = contra_repe_registre.text.toString()
 
             runBlocking {
+
                 if (correo != "" && nombre != "" && apellido !="" && contra == contrarepe && emailValid(correo) && validarContra(contra)){
                     try {
 
@@ -92,7 +94,6 @@ class RegisterActivity : AppCompatActivity() {
                             email = correo,
                             nomCli = nombre,
                             apellido = apellido,
-                            password = contra.hashCode().toString(),
                             pag1 = "NULL",
                             pag2 = "NULL"
                         )
@@ -120,10 +121,10 @@ class RegisterActivity : AppCompatActivity() {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    suspend fun authNewUser(correo: String, contraseña:String){
+    suspend fun authNewUser(correo: String, contraseña: String){
         auth.signUpWith(Email) {
-            email = correo
-            password = contraseña
+            email = "clarascc98@gmail.com"
+            password = "holaHola1."
         }
 
     }
