@@ -9,7 +9,7 @@ class ListaActivity2 : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_lista)
 
         val productListContainer: LinearLayout = findViewById(R.id.productListContainer)
         val subtotalText: TextView = findViewById(R.id.subtotalText)
@@ -17,7 +17,7 @@ class ListaActivity2 : AppCompatActivity(){
         // Función para agregar productos dinámicamente
         fun addProduct(name: String, quantity: Int, price: Double) {
             // Inflar la vista del producto desde el archivo XML (product_item.xml)
-            val productView = layoutInflater.inflate(R.layout.item_producto, productListContainer, false)
+            val productView = layoutInflater.inflate(R.layout.item_product, productListContainer, false)
 
             // Configurar los TextViews para mostrar los datos del producto
             val nameText: TextView = productView.findViewById(R.id.productName)
