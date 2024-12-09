@@ -20,4 +20,5 @@
     <color name="top">#9d8722</color>
     <color name="linkColor">#B92EFA</color>
     <color name="rojo">#FF0000</color>
+    <color name="transparente">#00FFFFFF</color>
 </resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MyRadioButtonStyle" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/custom_radio_button</item>
+    </style>
+
+    <style name="MyRadioButtonStylePayPal" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/custom_radio_button_paypal</item>
+    </style>
+
+
+</resources>

@@ -48,24 +48,7 @@ class RegisterActivity : AppCompatActivity() {
         var contra_repe_registre: EditText = findViewById(R.id.register_contra_repe)
         var textViewAlert: TextView = findViewById(R.id.contra_alerta)
 
-        contra_registre.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable?) {
-                val password = s.toString()
-                if (!validarContra(password)){
-                    textViewAlert.visibility = TextView.VISIBLE
-                    textViewAlert.text = "La contraseña debe contener al menos: \n"+
-                            "- 8 caracteres\n"+
-                            "- Una letra minúscula \n" +
-                            "- Una letra mayúscula \n" +
-                            "- Un número\n" +
-                            "- Un carácter especial"
-                } else{
-                    textViewAlert.visibility = TextView.GONE
-                }
-            }
-        })
+
         //runBlocking {
         //    try{
         //        authNewUser("clarascc98@gmail.com", "holaHola1.")
@@ -86,6 +69,7 @@ class RegisterActivity : AppCompatActivity() {
             var contrarepe = contra_repe_registre.text.toString()
 
             runBlocking {
+                authNewUser(correo, contra)
 
                 if (correo != "" && nombre != "" && apellido !="" && contra == contrarepe && emailValid(correo) && validarContra(contra)){
                     try {
@@ -98,7 +82,6 @@ class RegisterActivity : AppCompatActivity() {
                             pag2 = "NULL"
                         )
                         supabase.from("CLIENTE").insert(nuevoCliente)
-                        authNewUser(correo, contra)
                         val go = Intent(this@RegisterActivity, MainActivity::class.java)
                         go.putExtra("ALERT_TITLE", "Registro exitoso")
                         go.putExtra("ALERT_MESSAGE", "Usuario registrado correctamente")
