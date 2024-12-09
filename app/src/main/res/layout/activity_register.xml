@@ -151,6 +151,7 @@
           app:layout_constraintVertical_bias="0.082" />
 
       <RadioGroup
+          android:id="@+id/pago_principal"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:orientation="horizontal"
@@ -161,6 +162,7 @@
           app:layout_constraintVertical_bias="0.082">
 
         <RadioButton
+            android:id="@+id/g_pay_principal"
             style="@style/MyRadioButtonStyle"
             android:layout_width="71dp"
             android:layout_height="30dp"
@@ -169,6 +171,7 @@
             android:layout_margin="10dp"/>
 
         <RadioButton
+            android:id="@+id/apple_pay_principal"
             style="@style/MyRadioButtonStyle"
             android:layout_width="71dp"
             android:layout_height="30dp"
@@ -179,6 +182,7 @@
         </RadioButton>
 
         <RadioButton
+            android:id="@+id/ppal_principal"
             style="@style/MyRadioButtonStylePayPal"
             android:layout_width="123dp"
             android:layout_height="30dp"
@@ -204,6 +208,7 @@
 
 
       <RadioGroup
+          android:id="@+id/pago_secundario"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:orientation="horizontal"
@@ -215,6 +220,7 @@
           app:layout_constraintVertical_bias="0.583">
 
         <RadioButton
+            android:id="@+id/g_pay_secundario"
             style="@style/MyRadioButtonStyle"
             android:layout_width="71dp"
             android:layout_height="30dp"
@@ -223,6 +229,7 @@
             app:buttonTint="@drawable/custom_radio_button" />
 
         <RadioButton
+            android:id="@+id/apple_pay_secundario"
             style="@style/MyRadioButtonStyle"
             android:layout_width="71dp"
             android:layout_height="30dp"
@@ -233,6 +240,7 @@
         </RadioButton>
 
         <RadioButton
+            android:id="@+id/ppal_secundario"
             style="@style/MyRadioButtonStylePayPal"
             android:layout_width="123dp"
             android:layout_height="30dp"

@@ -10,6 +10,7 @@ import android.os.WorkDuration
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
@@ -48,7 +49,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        gotoRegister()
+        val botoRegister: Button = findViewById(R.id.button_sign_in)
+        val forgotPassword:TextView=findViewById(R.id.ForgotPassword)
+
+        gotoRegister(botoRegister)
+        gotoForgotPass(forgotPassword)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -66,12 +71,22 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-    fun gotoRegister(){
-        val botoRegister: Button = findViewById<Button>(R.id.button_sign_in)
+    fun gotoRegister(botoRegister:Button){
         botoRegister.setOnClickListener {
             val go = Intent(this, RegisterActivity::class.java)
             startActivity(go)
         }
+
+    }
+
+    fun gotoForgotPass(forgotPass: TextView){
+        forgotPass.setOnClickListener {
+            println("pulsado")
+            val goFor = Intent(this, ForgotActivity::class.java)
+            startActivity(goFor)
+
+        }
+
 
     }
 

@@ -9,6 +9,8 @@ import android.util.Log
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -47,17 +49,31 @@ class RegisterActivity : AppCompatActivity() {
         var contra_registre: EditText = findViewById(R.id.register_contra)
         var contra_repe_registre: EditText = findViewById(R.id.register_contra_repe)
         var textViewAlert: TextView = findViewById(R.id.contra_alerta)
+        val pago_principal: RadioGroup = findViewById(R.id.pago_principal)
+        val g_pay_principal: RadioButton = findViewById(R.id.g_pay_principal)
+        val apple_pay_principal: RadioButton = findViewById(R.id.apple_pay_principal)
+        val ppal_principal: RadioButton = findViewById(R.id.ppal_principal)
+        val pago_secundario: RadioGroup = findViewById(R.id.pago_secundario)
+        val g_pay_secundario: RadioButton = findViewById(R.id.g_pay_secundario)
+        val apple_pay_secundario: RadioButton = findViewById(R.id.apple_pay_secundario)
+        val ppal_secundario: RadioButton = findViewById(R.id.ppal_secundario)
+
+        var pago1: String = ""
+        var pago2: String = ""
+
+        pago_principal.setOnCheckedChangeListener {group, checkedId -> when (checkedId) {
+            R.id.g_pay_principal -> {pago1 = "Google Pay"}
+            R.id.apple_pay_principal -> {pago1 = "Apple Pay"}
+            R.id.ppal_principal -> {pago1 = "PayPal"}
+        } }
+
+        pago_secundario.setOnCheckedChangeListener {group, checkedId -> when (checkedId) {
+            R.id.g_pay_secundario -> {pago2 = "Google Pay"}
+            R.id.apple_pay_secundario -> {pago2 = "Apple Pay"}
+            R.id.ppal_secundario -> {pago2 = "PayPal"}
+        } }
 
 
-        //runBlocking {
-        //    try{
-        //        authNewUser("clarascc98@gmail.com", "holaHola1.")
-
-        //    } catch (e: Exception){
-        //        MainActivity.alerta(this@RegisterActivity, "Error de autenticación", "", 4000)
-        //        Log.d("ActRegister", e.toString())
-        //    }
-        //}
         val botoSendRegister: Button =findViewById<Button>(R.id.register_send_button)
         botoSendRegister.setOnClickListener {
 
@@ -68,19 +84,23 @@ class RegisterActivity : AppCompatActivity() {
             var contra = contra_registre.text.toString()
             var contrarepe = contra_repe_registre.text.toString()
 
-            runBlocking {
-                authNewUser(correo, contra)
 
-                if (correo != "" && nombre != "" && apellido !="" && contra == contrarepe && emailValid(correo) && validarContra(contra)){
+
+            runBlocking {
+
+
+
+                if (correo != "" && nombre != "" && apellido !="" && contra == contrarepe && emailValid(correo) && validarContra(contra) && pago1 != pago2){
                     try {
 
                         val nuevoCliente = MainActivity.cliente(
                             email = correo,
                             nomCli = nombre,
                             apellido = apellido,
-                            pag1 = "NULL",
-                            pag2 = "NULL"
+                            pag1 = pago1,
+                            pag2 = pago2,
                         )
+                        authNewUser(correo, contra)
                         supabase.from("CLIENTE").insert(nuevoCliente)
                         val go = Intent(this@RegisterActivity, MainActivity::class.java)
                         go.putExtra("ALERT_TITLE", "Registro exitoso")
@@ -95,6 +115,8 @@ class RegisterActivity : AppCompatActivity() {
                     }
 
 
+                } else if (pago1 == pago2){
+                    MainActivity.alerta(this@RegisterActivity, "Error en el metodo de pago", "Los dos metodos no pueden ser el mismo", 1000)
                 }
 
             }
@@ -106,15 +128,21 @@ class RegisterActivity : AppCompatActivity() {
 
     suspend fun authNewUser(correo: String, contraseña: String){
         auth.signUpWith(Email) {
-            email = "clarascc98@gmail.com"
-            password = "holaHola1."
+            email = correo
+            password = contraseña
         }
 
     }
 
     fun validarContra(contraseña: String): Boolean{
-        val regex = Regex("^(?=.*[A-Z])(?=.*[a-z])(?=.*[\\d])(?=.*[@\$!%*?&])[A-Za\\d@\$!%*?&]{8,}$")
-        return regex.matches(contraseña)
+        val minLon = 8
+        val mayus = contraseña.any { it.isUpperCase() }
+        val minus = contraseña.any { it.isLowerCase() }
+        val numeros = contraseña.any { it.isDigit() }
+        val CharEspecial = contraseña.any { !it.isLetterOrDigit() }
+        val LongitudMinima = contraseña.length >= minLon
+
+        return mayus && minus && numeros && CharEspecial && LongitudMinima
     }
 
 }
