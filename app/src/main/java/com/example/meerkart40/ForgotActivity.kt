@@ -16,5 +16,24 @@ class ForgotActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+         var forgotEmail: EditText = findViewById(R.id.forgot_email)
+        var email = forgotEmail.text.toString()
+        val botoSendForgot: Button =findViewById<Button>(R.id.envia_correo_recu)
+        botoSendForgot.setOnClickListener {
+            runBlocking {
+                try {
+                    resetPasswordEmail(email)
+                } catch (e: Exception) {
+
+                }
+            }
+        }
     }
+
+    suspend fun resetPasswordEmail(correo: String){
+        supabase.auth.resetPasswordForEmail(
+            email = correo
+        )
+    }
+    
 }
