@@ -127,7 +127,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     suspend fun authNewUser(correo: String, contraseña: String){
-        auth.signUpWith(Email) {
+        supabase.auth.signUpWith(Email) {
             email = correo
             password = contraseña
         }
