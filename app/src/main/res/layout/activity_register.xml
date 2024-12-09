@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -77,9 +78,9 @@
           android:layout_width="fill_parent"
           android:layout_height="48dp"
           android:layout_marginTop="10dp"
-          android:inputType="textPassword"
           android:background="@drawable/textrounded"
           android:hint="Contraseña"
+          android:inputType="textPassword"
           android:padding="6dp"
           android:textColorHint="@color/gris"
           app:layout_constraintBottom_toTopOf="@+id/register_contra_repe"
@@ -88,29 +89,29 @@
           app:layout_constraintTop_toBottomOf="@+id/register_email"
           tools:ignore="TouchTargetSizeCheck" />
 
-        <TextView
-            android:id="@+id/contra_alerta"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/rojo"
-            android:textSize="12sp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/register_contra"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/register_contra_repe" />
+      <TextView
+          android:id="@+id/contra_alerta"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="4dp"
+          android:textColor="@color/rojo"
+          android:textSize="12sp"
+          android:visibility="gone"
+          app:layout_constraintBottom_toTopOf="@id/register_contra_repe"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/register_contra" />
 
 
-        <EditText
+      <EditText
           android:id="@+id/register_contra_repe"
           android:layout_width="fill_parent"
           android:layout_height="48dp"
           android:layout_marginTop="10dp"
           android:layout_marginBottom="206dp"
           android:background="@drawable/textrounded"
-          android:inputType="textPassword"
           android:hint="Repetir Contraseña"
+          android:inputType="textPassword"
           android:padding="6dp"
           android:textColorHint="@color/gris"
           app:layout_constraintBottom_toBottomOf="parent"
@@ -132,6 +133,7 @@
           android:textStyle="bold"
           app:layout_constraintBottom_toTopOf="@+id/register_name"
           app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.2"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent" />
 
@@ -148,6 +150,49 @@
           app:layout_constraintTop_toBottomOf="@+id/register_contra_repe"
           app:layout_constraintVertical_bias="0.082" />
 
+      <RadioGroup
+          android:id="@+id/pago_principal"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/pago_pp_textview"
+          app:layout_constraintVertical_bias="0.082">
+
+        <RadioButton
+            android:id="@+id/g_pay_principal"
+            style="@style/MyRadioButtonStyle"
+            android:layout_width="71dp"
+            android:layout_height="30dp"
+            android:background="@drawable/g_pay"
+            app:buttonTint="@drawable/custom_radio_button"
+            android:layout_margin="10dp"/>
+
+        <RadioButton
+            android:id="@+id/apple_pay_principal"
+            style="@style/MyRadioButtonStyle"
+            android:layout_width="71dp"
+            android:layout_height="30dp"
+            android:background="@drawable/apple_pay_logo"
+            app:buttonTint="@drawable/custom_radio_button"
+            android:layout_margin="10dp">
+
+        </RadioButton>
+
+        <RadioButton
+            android:id="@+id/ppal_principal"
+            style="@style/MyRadioButtonStylePayPal"
+            android:layout_width="123dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ppal_logo"
+            app:buttonTint="@drawable/custom_radio_button"
+            android:layout_margin="10dp"/>
+
+      </RadioGroup>
+
+
       <TextView
           android:id="@+id/pago_sec_textview"
           android:layout_width="wrap_content"
@@ -161,114 +206,49 @@
           app:layout_constraintTop_toBottomOf="@+id/register_contra_repe"
           app:layout_constraintVertical_bias="0.606" />
 
-      <androidx.constraintlayout.widget.ConstraintLayout
-          android:layout_width="309dp"
-          android:layout_height="67dp"
 
-          android:padding="16dp"
-          app:layout_constraintBottom_toTopOf="@+id/pago_sec_textview"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/pago_pp_textview">
-
-        <ImageButton
-            android:id="@+id/apple_pay_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/paypal_button"
-
-            app:layout_constraintStart_toEndOf="@+id/g_pay_button"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/apple_pay_logo"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-        <ImageButton
-            android:id="@+id/g_pay_button"
-            android:layout_width="87dp"
-            android:layout_height="34dp"
-            android:backgroundTint="@color/white"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/apple_pay_button"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/g_pay"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-        <ImageButton
-            android:id="@+id/paypal_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-
-            app:layout_constraintStart_toEndOf="@+id/apple_pay_button"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/ppal_logo"
-            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
-      </androidx.constraintlayout.widget.ConstraintLayout>
-
-      <androidx.constraintlayout.widget.ConstraintLayout
-          android:layout_width="309dp"
-          android:layout_height="67dp"
-
-          android:layout_marginTop="9dp"
-          android:padding="16dp"
+      <RadioGroup
+          android:id="@+id/pago_secundario"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.0"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/pago_sec_textview">
+          app:layout_constraintTop_toBottomOf="@+id/pago_sec_textview"
+          app:layout_constraintVertical_bias="0.583">
 
-        <ImageButton
-            android:id="@+id/apple_pay_button_sec"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
+        <RadioButton
+            android:id="@+id/g_pay_secundario"
+            style="@style/MyRadioButtonStyle"
+            android:layout_width="71dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/g_pay"
+            app:buttonTint="@drawable/custom_radio_button" />
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/paypal_button_sec"
+        <RadioButton
+            android:id="@+id/apple_pay_secundario"
+            style="@style/MyRadioButtonStyle"
+            android:layout_width="71dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/apple_pay_logo"
+            app:buttonTint="@drawable/custom_radio_button">
 
-            app:layout_constraintStart_toEndOf="@+id/g_pay_button_sec"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/apple_pay_logo"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        </RadioButton>
 
-        <ImageButton
-            android:id="@+id/g_pay_button_sec"
-            android:layout_width="87dp"
-            android:layout_height="34dp"
-            android:backgroundTint="@color/white"
+        <RadioButton
+            android:id="@+id/ppal_secundario"
+            style="@style/MyRadioButtonStylePayPal"
+            android:layout_width="123dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/ppal_logo"
+            app:buttonTint="@drawable/custom_radio_button" />
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/apple_pay_button_sec"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/g_pay"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-        <ImageButton
-            android:id="@+id/paypal_button_sec"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-
-            app:layout_constraintStart_toEndOf="@+id/apple_pay_button_sec"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/ppal_logo"
-            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
-      </androidx.constraintlayout.widget.ConstraintLayout>
+      </RadioGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
   </androidx.cardview.widget.CardView>
@@ -288,4 +268,7 @@
       app:layout_constraintTop_toBottomOf="@+id/cardView"
       app:layout_constraintVertical_bias="0.3" />
 
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+

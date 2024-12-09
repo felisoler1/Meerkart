@@ -10,6 +10,7 @@ import android.os.WorkDuration
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
@@ -19,9 +20,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import io.github.jan.supabase.auth.Auth
-import io.github.jan.supabase.auth.auth
-import io.github.jan.supabase.auth.providers.Google
-import io.github.jan.supabase.auth.providers.builtin.Email
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
 import kotlinx.coroutines.delay
@@ -35,10 +33,9 @@ val supabase = createSupabaseClient(
     install(Postgrest)
 }
 
-val auth = supabase.auth
-
-
 class MainActivity : AppCompatActivity() {
+
+    private  lateinit var  registerActivityLauncher: ActivityResultLauncher<Intent>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,9 +43,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+        val botoRegister: Button = findViewById<Button>(R.id.button_sign_in)
+        val forgotPassword:TextView=findViewById(R.id.ForgotPassword)
 
-
-        gotoRegister()
+        gotoRegister(botoRegister)
+        gotoForgotPass(forgotPassword)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -56,24 +55,33 @@ class MainActivity : AppCompatActivity() {
             insets
 
         }
-
         val titulo = intent.getStringExtra("ALERT_TITLE") ?: ""
         val mensaje = intent.getStringExtra("ALERT_MESSAGE") ?: ""
 
-        if (titulo != "") {
+        if (titulo != ""){
             alerta(this, titulo, mensaje, 1000)
         }
 
 
+
+
     }
-    fun gotoRegister(){
-        val botoRegister: Button = findViewById<Button>(R.id.button_sign_in)
+    fun gotoRegister(botoRegister:Button){
         botoRegister.setOnClickListener {
             val go = Intent(this, RegisterActivity::class.java)
             startActivity(go)
         }
 
     }
+    fun gotoForgotPass(forgotPass:TextView){
+        forgotPass.setOnClickListener {
+            val goFP= Intent(this,ForgotActivity::class.java)
+            startActivity(goFP)
+        }
+
+    }
+
+
 
     companion object{
         fun alerta(context:Activity, titulo: String, mensaje: String, duration: Long){
@@ -89,6 +97,8 @@ class MainActivity : AppCompatActivity() {
                         alert.dismiss()
                     }
                 }, duration)
+
+
         }
     }
 
