@@ -3,7 +3,8 @@
 
     <item android:state_checked="true">
         <shape android:shape="rectangle">
-            <solid android:color="@android:color/transparent"/> <!-- Interior transparente -->
+            <solid android:color="#00FFFFFF"/> <!-- Color por defecto -->
+            <!-- Interior transparente -->
             <stroke android:width="2dp" android:color="#DCBD87"/> <!-- Borde rojo cuando está seleccionado -->
             <corners android:radius="4dp"/> <!-- Esquinas redondeadas opcionales -->
             <size android:width="71dp" android:height="30dp"/>

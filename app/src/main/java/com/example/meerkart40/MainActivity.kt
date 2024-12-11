@@ -20,9 +20,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import io.github.jan.supabase.auth.Auth
+import io.github.jan.supabase.auth.auth
+import io.github.jan.supabase.auth.providers.builtin.Email
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 
 val supabase = createSupabaseClient(
@@ -45,9 +48,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val botoRegister: Button = findViewById<Button>(R.id.button_sign_in)
         val forgotPassword:TextView=findViewById(R.id.ForgotPassword)
+        val boto_login: Button = findViewById(R.id.button_login)
 
         gotoRegister(botoRegister)
         gotoForgotPass(forgotPassword)
+
+        val usuario: EditText = findViewById(R.id.email)
+        val contraseña: EditText = findViewById(R.id.contra)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -61,6 +68,21 @@ class MainActivity : AppCompatActivity() {
         if (titulo != ""){
             alerta(this, titulo, mensaje, 1000)
         }
+
+        boto_login.setOnClickListener {
+            var email = usuario.text.toString()
+            var contra = contraseña.text.toString()
+            runBlocking {
+            try{
+                inicioSesion(email, contra)
+                val lista = Intent(this@MainActivity, ListaActivity::class.java)
+                startActivity(lista)
+            } catch (e: Exception){
+                Log.d("Main Activity", "Inicio de sesion no valido")
+            }
+        }
+        }
+
 
 
 
@@ -79,6 +101,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(goFP)
         }
 
+    }
+
+    suspend fun inicioSesion(correo: String, contra: String){
+        supabase.auth.signInWith(Email) {
+            email = correo
+            password = contra
+        }
     }
 
 
@@ -110,5 +139,7 @@ class MainActivity : AppCompatActivity() {
         val pag1:String,
         val pag2: String
     )
+
+
 
 }
