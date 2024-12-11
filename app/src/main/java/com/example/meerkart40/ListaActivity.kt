@@ -3,11 +3,13 @@ package com.example.meerkart40
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.meerkart40.adapters.ProductAdapter
 
-class ListaActivity: AppCompatActivity() {
+
+class ListaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -18,6 +20,13 @@ class ListaActivity: AppCompatActivity() {
 //           v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
 //          insets
 //      }
+   }
+
+    override fun onResume() {
+        super.onResume()
+        // Actualiza la lista cuando la actividad se reanuda
+        val adapter = ProductAdapter(ProductProvider.productList)
+        adapter.notifyDataSetChanged()
     }
 
     private fun initRecyclerView(){
@@ -26,4 +35,5 @@ class ListaActivity: AppCompatActivity() {
         recyclerView.adapter = ProductAdapter(ProductProvider.productList)
 
     }
+
 }

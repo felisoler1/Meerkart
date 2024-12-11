@@ -25,11 +25,11 @@ class ForgotActivity : AppCompatActivity() {
         var email = forgotEmail.text.toString()
         val botoSendForgot: Button =findViewById(R.id.envia_correo_recu)
         botoSendForgot.setOnClickListener {
+            var email = forgotEmail.text.toString()
             runBlocking {
                 try {
                     resetPasswordEmail(email)
                 } catch (e: Exception) {
-
                 }
             }
         }
@@ -37,7 +37,8 @@ class ForgotActivity : AppCompatActivity() {
 
     suspend fun resetPasswordEmail(correo: String){
         supabase.auth.resetPasswordForEmail(
-            email = correo
+            email = correo,
+            redirectUrl = "https://meerkart.com/reset-password"
         )
     }
     

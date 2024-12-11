@@ -75,10 +75,10 @@ class MainActivity : AppCompatActivity() {
             runBlocking {
             try{
                 inicioSesion(email, contra)
-                val lista = Intent(this@MainActivity, ListaActivity::class.java)
-                startActivity(lista)
+                gotoLista()
+
             } catch (e: Exception){
-                Log.d("Main Activity", "Inicio de sesion no valido")
+                Log.d("incioSesion", "Inicio de sesion no valido")
             }
         }
         }
@@ -110,6 +110,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    suspend fun gotoLista(){
+            val goLista = Intent(this, ListaActivity::class.java)
+            startActivity(goLista)
+
+    }
+
 
 
     companion object{
@@ -138,6 +144,20 @@ class MainActivity : AppCompatActivity() {
         val apellido: String,
         val pag1:String,
         val pag2: String
+    )
+
+    @Serializable
+    data class  unidad(
+        val id : Int,
+        val comprado: Boolean,
+        val referencia: Int
+    )
+
+    @Serializable
+    data class producto(
+        val referencia: Int,
+        val nomProd: String,
+        val precio: Float
     )
 
 
