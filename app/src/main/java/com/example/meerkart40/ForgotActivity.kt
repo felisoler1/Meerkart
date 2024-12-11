@@ -23,7 +23,7 @@ class ForgotActivity : AppCompatActivity() {
 
         var forgotEmail: EditText = findViewById(R.id.forgot_email)
         var email = forgotEmail.text.toString()
-        val botoSendForgot: Button =findViewById<Button>(R.id.envia_correo_recu)
+        val botoSendForgot: Button =findViewById(R.id.envia_correo_recu)
         botoSendForgot.setOnClickListener {
             runBlocking {
                 try {
@@ -40,4 +40,5 @@ class ForgotActivity : AppCompatActivity() {
             email = correo
         )
     }
+    
 }

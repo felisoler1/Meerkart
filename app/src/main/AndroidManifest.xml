@@ -20,6 +20,13 @@
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
+
+        <activity android:name=".ListaActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.CALL_BUTTON"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"

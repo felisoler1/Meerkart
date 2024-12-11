@@ -88,8 +88,6 @@ class RegisterActivity : AppCompatActivity() {
 
             runBlocking {
 
-
-
                 if (correo != "" && nombre != "" && apellido !="" && contra == contrarepe && emailValid(correo) && validarContra(contra) && pago1 != pago2){
                     try {
 
@@ -131,7 +129,6 @@ class RegisterActivity : AppCompatActivity() {
             email = correo
             password = contraseña
         }
-
     }
 
     fun validarContra(contraseña: String): Boolean{
