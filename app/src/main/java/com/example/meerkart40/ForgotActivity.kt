@@ -38,7 +38,7 @@ class ForgotActivity : AppCompatActivity() {
     suspend fun resetPasswordEmail(correo: String){
         supabase.auth.resetPasswordForEmail(
             email = correo,
-            redirectUrl = "https://meerkart.com/reset-password"
+            redirectUrl = "https://jotaemers.github.io/password-reset.html"
         )
     }
     

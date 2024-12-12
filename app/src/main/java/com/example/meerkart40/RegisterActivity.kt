@@ -3,6 +3,7 @@ package com.example.meerkart40
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore.Audio.Radio
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -48,73 +49,99 @@ class RegisterActivity : AppCompatActivity() {
         var email_registre: EditText = findViewById(R.id.register_email)
         var contra_registre: EditText = findViewById(R.id.register_contra)
         var contra_repe_registre: EditText = findViewById(R.id.register_contra_repe)
-        var textViewAlert: TextView = findViewById(R.id.contra_alerta)
         val pago_principal: RadioGroup = findViewById(R.id.pago_principal)
-        val g_pay_principal: RadioButton = findViewById(R.id.g_pay_principal)
-        val apple_pay_principal: RadioButton = findViewById(R.id.apple_pay_principal)
-        val ppal_principal: RadioButton = findViewById(R.id.ppal_principal)
         val pago_secundario: RadioGroup = findViewById(R.id.pago_secundario)
-        val g_pay_secundario: RadioButton = findViewById(R.id.g_pay_secundario)
-        val apple_pay_secundario: RadioButton = findViewById(R.id.apple_pay_secundario)
-        val ppal_secundario: RadioButton = findViewById(R.id.ppal_secundario)
-
         var pago1: String = ""
+        pago_principal.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.g_pay_principal-> { pago1 = "Google Pay" }
+                R.id.apple_pay_principal -> { pago1 = "Apple Pay" }
+                R.id.ppal_principal -> { pago1 = "PayPal" }
+            }
+        }
+
         var pago2: String = ""
-
-        pago_principal.setOnCheckedChangeListener {group, checkedId -> when (checkedId) {
-            R.id.g_pay_principal -> {pago1 = "Google Pay"}
-            R.id.apple_pay_principal -> {pago1 = "Apple Pay"}
-            R.id.ppal_principal -> {pago1 = "PayPal"}
-        } }
-
-        pago_secundario.setOnCheckedChangeListener {group, checkedId -> when (checkedId) {
-            R.id.g_pay_secundario -> {pago2 = "Google Pay"}
-            R.id.apple_pay_secundario -> {pago2 = "Apple Pay"}
-            R.id.ppal_secundario -> {pago2 = "PayPal"}
-        } }
-
+        pago_secundario.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.g_pay_secundario-> { pago1 = "Google Pay" }
+                R.id.apple_pay_secundario -> { pago1 = "Apple Pay" }
+                R.id.ppal_secundario-> { pago1 = "PayPal" }
+            }
+        }
 
         val botoSendRegister: Button =findViewById<Button>(R.id.register_send_button)
         botoSendRegister.setOnClickListener {
-
-
             var nombre = nombre_registre.text.toString()
             var apellido = apellido_registre.text.toString()
             var correo = email_registre.text.toString()
             var contra = contra_registre.text.toString()
             var contrarepe = contra_repe_registre.text.toString()
-
-
-
             runBlocking {
-
-                if (correo != "" && nombre != "" && apellido !="" && contra == contrarepe && emailValid(correo) && validarContra(contra) && pago1 != pago2){
-                    try {
-
-                        val nuevoCliente = MainActivity.cliente(
-                            email = correo,
-                            nomCli = nombre,
-                            apellido = apellido,
-                            pag1 = pago1,
-                            pag2 = pago2,
+                if (correo != "" && nombre != "" && apellido != "") {
+                    if (contra == contrarepe) {
+                        if (emailValid(correo)) {
+                            if (validarContra(contra)) {
+                                if (pago1 != pago2) {
+                                    try {
+                                        val nuevoCliente = MainActivity.cliente(
+                                            email = correo,
+                                            nomCli = nombre,
+                                            apellido = apellido,
+                                            pag1 = pago1,
+                                            pag2 = pago2,
+                                        )
+                                        authNewUser(correo, contra)
+                                        supabase.from("CLIENTE").insert(nuevoCliente)
+                                        val go =
+                                            Intent(this@RegisterActivity, MainActivity::class.java)
+                                        go.putExtra("ALERT_TITLE", "Registro exitoso")
+                                        go.putExtra(
+                                            "ALERT_MESSAGE",
+                                            "Usuario registrado correctamente"
+                                        )
+                                        go.putExtra("SHOW_ALERT", true)
+                                        setResult(RESULT_OK, go)
+                                        startActivity(go)
+                                    } catch (e: Exception) {
+                                        MainActivity.alerta(
+                                            this@RegisterActivity,
+                                            "Error en el correo",
+                                            "Usuario ya registrado",
+                                            1000
+                                        )
+                                    }
+                                } else {
+                                    MainActivity.alerta(
+                                        this@RegisterActivity,
+                                        "Error en el metodo de pago",
+                                        "Los dos metodos no pueden ser el mismo",
+                                        1000
+                                    )
+                                }
+                            } else {
+                                MainActivity.alerta(
+                                    this@RegisterActivity,
+                                    "Error en la contraseña",
+                                    "La contraseña no cumple con las condiciones",
+                                    1000
+                                )
+                            }
+                        } else {
+                            MainActivity.alerta(
+                                this@RegisterActivity,
+                                "Error en el correo",
+                                "El correo no cumple",
+                                1000
+                            )
+                        }
+                    } else {
+                        MainActivity.alerta(
+                            this@RegisterActivity,
+                            "Error en la contraseña",
+                            "La contraseña no coincide",
+                            1000
                         )
-                        authNewUser(correo, contra)
-                        supabase.from("CLIENTE").insert(nuevoCliente)
-                        val go = Intent(this@RegisterActivity, MainActivity::class.java)
-                        go.putExtra("ALERT_TITLE", "Registro exitoso")
-                        go.putExtra("ALERT_MESSAGE", "Usuario registrado correctamente")
-                        go.putExtra("SHOW_ALERT", true)
-                        setResult(RESULT_OK, go)
-                        startActivity(go)
-
-
-                    } catch (e:Exception){
-                        MainActivity.alerta(this@RegisterActivity, "Error en el correo", "Usuario ya registrado", 1000)
                     }
-
-
-                } else if (pago1 == pago2){
-                    MainActivity.alerta(this@RegisterActivity, "Error en el metodo de pago", "Los dos metodos no pueden ser el mismo", 1000)
                 }
 
             }
@@ -125,11 +152,25 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     suspend fun authNewUser(correo: String, contraseña: String){
-        supabase.auth.signUpWith(Email) {
+        supabase.auth.signUpWith(Email, redirectUrl = "https://jotaemers.github.io/confirm-signup.html") {
             email = correo
             password = contraseña
         }
     }
+
+    fun metodoPago(boto: RadioGroup, g_pay: Int, apple_pay: Int, paypal: Int): String {
+        var pago: String = ""
+        boto.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                g_pay -> { pago = "Google Pay" }
+                apple_pay -> { pago = "Apple Pay" }
+                paypal -> { pago = "PayPal" }
+            }
+        }
+        Log.d("pago", pago)
+        return pago
+    }
+
 
     fun validarContra(contraseña: String): Boolean{
         val minLon = 8
