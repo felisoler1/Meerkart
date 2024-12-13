@@ -1,20 +1,16 @@
 package com.example.meerkart40
 
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 
-class ProductProvider {
-    companion object{
-        var productList = mutableListOf<Productos>(
-            Productos( "lejia", 1, 1.00),
-            Productos( "lejia", 1, 1.00),
-            Productos( "lejia", 1, 1.00),
-            Productos( "lejia", 1, 1.00),
-            Productos( "lejia", 1, 1.00),
-            Productos( "lejia", 1, 1.00),
-            Productos( "lejia", 1, 1.00),
-            Productos( "lejia", 1, 1.00),
-            Productos( "lejia", 1, 1.00),
-            Productos( "lejia", 1, 1.00),
-        )
+object ProductProvider {
+    // Lista de productos
+    val productList: MutableList<Productos> = mutableListOf()
+
+    // Metodo para agregar un producto
+    fun addProduct(product: Productos) {
+        productList.add(product)
+        Log.d("ProductProvider", "Lista de productos $productList")
     }
+
 }

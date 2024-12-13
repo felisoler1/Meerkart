@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Columns
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -50,6 +51,8 @@ class ListaActivity : AppCompatActivity() {
             )
             Log.d("ListaActivity", "Foreground Dispatch Activado")
         }
+        val adapter = ProductAdapter(ProductProvider.productList)
+        adapter.notifyDataSetChanged()
     }
 
     override fun onPause() {
@@ -106,26 +109,40 @@ class ListaActivity : AppCompatActivity() {
             var nomProd: String = ""
             var precio: String = ""
 
-            Log.d("Detecto", ref)
+            var newProduct: Productos
 
-            lifecycleScope.launch {
+
+            runBlocking {
                 try {
+                    delay(1000)
                     ref = ObtenerRef(nfcId.toString())
                     nomProd = ObtenerProducto(ref)
                     precio = ObtenerPrecio(ref)
-
-                    // ProductProvider.productList.add(Productos(nomProd, 1, precio.toDouble()))
 
 
                     Log.d("Detecto", "referencia: " + ref)
                     Log.d("Detecto","nom producte: "+ nomProd)
                     Log.d("Detecto", "PREU: " +precio)
 
+                    Log.d("ProductProvider", "Producto newProduct")
+
+                    newProduct = Productos(nomProd, 1, precio.toDouble())
+                    ProductProvider.addProduct(newProduct)
+
+
+
+                    Log.d("ProductProvider", "HOLA" + ProductProvider.productList.toString())
+
+
+
                 } catch (e:Exception){
                     Log.d("Detecto", e.message.toString())
                 }
             }
+
+
         }
+
     }
 
     private fun processNFC(intent: Intent): String {
