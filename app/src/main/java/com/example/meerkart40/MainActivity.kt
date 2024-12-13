@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    suspend fun gotoLista(){
+    fun gotoLista(){
             val goLista = Intent(this, ListaActivity::class.java)
             startActivity(goLista)
 
