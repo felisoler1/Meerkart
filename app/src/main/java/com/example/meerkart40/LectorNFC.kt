@@ -32,6 +32,8 @@ class LectorNFC: AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        
         var nfcId = handleIntent(intent)
         Log.d("nfcID", nfcId.toString())
 
@@ -41,13 +43,7 @@ class LectorNFC: AppCompatActivity() {
                 nomProd = ObtenerProducto(ref)
                 precio = ObtenerPrecio(ref).toDouble()
 
-                val intent = Intent(this@LectorNFC, ProductProvider::class.java)
-                intent.putExtra("productName", nomProd)
-                intent.putExtra("productQuantity", 2)
-                intent.putExtra("productPrice", precio)
-                startActivity(intent)
-
-                ProductProvider.productList.add(Productos(nomProd, 1, precio.toDouble()))
+               // ProductProvider.productList.add(Productos(nomProd, 1, precio.toDouble()))
 
 
                 Log.d("referencia", "referencia: " + ref)
@@ -61,7 +57,7 @@ class LectorNFC: AppCompatActivity() {
 
     }
 
-    private fun handleIntent(intent: Intent): String {
+    fun handleIntent(intent: Intent): String {
         var nfcId: String = ""
         Log.d("Funciona", "handleIntent")
         val tag: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
