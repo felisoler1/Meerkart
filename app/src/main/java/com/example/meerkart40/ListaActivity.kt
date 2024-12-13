@@ -53,6 +53,7 @@ class ListaActivity : AppCompatActivity() {
         }
         val adapter = ProductAdapter(ProductProvider.productList)
         adapter.notifyDataSetChanged()
+        
     }
 
     override fun onPause() {
@@ -95,7 +96,7 @@ class ListaActivity : AppCompatActivity() {
                 eq ("referencia", ref)
             }
         }
-        return precio.data.dropLast(2).drop(10)
+        return precio.data.dropLast(2).substringAfter(":")
     }
 
     private fun handleNFCIntent(intent: Intent) {
@@ -114,7 +115,6 @@ class ListaActivity : AppCompatActivity() {
 
             runBlocking {
                 try {
-                    delay(1000)
                     ref = ObtenerRef(nfcId.toString())
                     nomProd = ObtenerProducto(ref)
                     precio = ObtenerPrecio(ref)
@@ -131,15 +131,15 @@ class ListaActivity : AppCompatActivity() {
 
 
 
-                    Log.d("ProductProvider", "HOLA" + ProductProvider.productList.toString())
+
 
 
 
                 } catch (e:Exception){
-                    Log.d("Detecto", e.message.toString())
+                    Log.d("Detecto", "${e.message}")
                 }
             }
-
+            Log.d("ProductProvider", "HOLA" + ProductProvider.productList.toString())
 
         }
 
